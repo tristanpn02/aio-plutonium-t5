@@ -45,4 +45,4 @@ fi
 #Run the updater
 chmod +x $UPDATER_DIRECTORY/plutonium-updater
 echo "Updater found, running updater..."
-$UPDATER_DIRECTORY/plutonium-updater -d /t6server/plutonium
+$UPDATER_DIRECTORY/plutonium-updater -d /t5server/plutonium
