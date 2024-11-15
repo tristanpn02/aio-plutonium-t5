@@ -5,6 +5,7 @@ This repository contains files and instructions for building and running a [Plut
 This solution is designed to simplify the process of hosting a LAN or WAN server by automating the setup.
 
 > **Note:** This repository is based on a fork of [thejcpalma's AIO-Plutonium-T6 project](https://github.com/thejcpalma/aio-plutonium-t6).
+> **Note:** This repository may be archived soon to combine T5 and T6
 
 - Currently tested on Linux and Windows; it should run on any system that supports Docker.
 - Tested in LAN environments (accessible via reverse proxy for WAN) and Zombie mode, though it may also support Multiplayer.
@@ -49,7 +50,7 @@ docker run -d --name aio-plutonium-t5-server \
 docker run -d --name aio-plutonium-t5-server \
            -p 4976:4976/udp \
            -p 1624:1624/tcp \
-           -v aio-plutonium-t5:/t6server \
+           -v aio-plutonium-t5:/t5server \
            -e LAN_MODE="true" \
            -e SERVER_RCON_PASSWORD="admin" \
            -e SERVER_MAX_CLIENTS="8" \
