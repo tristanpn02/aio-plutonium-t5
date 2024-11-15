@@ -6,12 +6,12 @@ LABEL author="Tristan Andersen"
 ################################################################################
 #                             Environment Variables                            #
 ################################################################################
-ENV PLUTONIUM_DIRECTORY="/t6server/plutonium"
-ENV SERVER_DIRECTORY="/t6server/server"
-ENV IW4ADMIN_DIRECTORY="/t6server/admin"
-ENV UPDATER_DIRECTORY="/t6server/updater"
-ENV DOWNLOAD_DIRECTORY="/t6server/downloaded_files"
-ENV STATUS_DIRECTORY="/t6server/status"
+ENV PLUTONIUM_DIRECTORY="/t5server/plutonium"
+ENV SERVER_DIRECTORY="/t5server/server"
+ENV IW4ADMIN_DIRECTORY="/t5server/admin"
+ENV UPDATER_DIRECTORY="/t5server/updater"
+ENV DOWNLOAD_DIRECTORY="/t5server/downloaded_files"
+ENV STATUS_DIRECTORY="/t5server/status"
 
 ENV WINEPREFIX="/root/.wine"
 ENV WINEDEBUG="fixme-all"
@@ -76,19 +76,19 @@ RUN wget https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/package
 #                               Installing WINE                                #
 ################################################################################
 
-COPY resources/install_wine.sh /t6server/install_wine.sh 
-RUN chmod +x /t6server/install_wine.sh 
+COPY resources/install_wine.sh /t5server/install_wine.sh 
+RUN chmod +x /t5server/install_wine.sh 
 # [TODO] Run installer of the script in the server-launch.sh
-RUN bash /t6server/install_wine.sh  && rm /t6server/install_wine.sh 
+RUN bash /t5server/install_wine.sh  && rm /t5server/install_wine.sh 
 
 
 ################################################################################
 #                             Installing Updater                               #
 ################################################################################
 
-COPY resources/check_updater.sh /t6server/check_updater.sh
+COPY resources/check_updater.sh /t5server/check_updater.sh
 #Make sure the script is executable by anyone
-RUN chmod ugo+x /t6server/check_updater.sh
+RUN chmod ugo+x /t5server/check_updater.sh
 
 
 ################################################################################
@@ -106,7 +106,7 @@ RUN wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-p
 
 
 # Prepare server launch
-WORKDIR /t6server
+WORKDIR /t5server
 COPY resources/server-launch.sh .
 RUN chmod +x server-launch.sh
 

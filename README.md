@@ -1,4 +1,4 @@
-# [AIO-Plutonium-T6](https://github.com/thejcpalma/aio-plutonium-t6) - All-in-One Plutonium Server
+# AIO-Plutonium-T5 - All-in-One Plutonium Server
 
 This repository contains files and instructions for building and running a [Plutonium](https://plutonium.pw) server with an integrated [IW4Admin](https://github.com/RaidMax/IW4M-Admin) panel within Docker.
 
@@ -19,13 +19,13 @@ This solution is designed to simplify the process of hosting a LAN or WAN server
 ### 1. Build the Docker Image
 To build the Docker image, run:
 ```bash
-docker build -t aio-plutonium-t6 .
+docker build -t aio-plutonium-t5 .
 ```
 
 ### 2. Create a Docker Volume
 Create a Docker volume to store server files for persistence:
 ```bash
-docker volume create aio-plutonium-t6
+docker volume create aio-plutonium-t5
 ```
 
 ### 3. Launch the Server
@@ -34,10 +34,10 @@ With the volume created, you can now launch the server.
 
 **To launch in online mode:**
 ```bash
-docker run -d --name aio-plutonium-t6-server \
+docker run -d --name aio-plutonium-t5-server \
            -p 4976:4976/udp \
            -p 1624:1624/tcp \
-           -v aio-plutonium-t6:/t6server \
+           -v aio-plutonium-t5:/t5server \
            -e SERVER_KEY="your_server_key" \
            -e SERVER_RCON_PASSWORD="admin" \
            -e SERVER_MAX_CLIENTS="7" \
@@ -46,10 +46,10 @@ docker run -d --name aio-plutonium-t6-server \
 
 **To launch in LAN mode:**
 ```bash
-docker run -d --name aio-plutonium-t6-server \
+docker run -d --name aio-plutonium-t5-server \
            -p 4976:4976/udp \
            -p 1624:1624/tcp \
-           -v aio-plutonium-t6:/t6server \
+           -v aio-plutonium-t5:/t6server \
            -e LAN_MODE="true" \
            -e SERVER_RCON_PASSWORD="admin" \
            -e SERVER_MAX_CLIENTS="8" \
@@ -63,7 +63,7 @@ Once the server is running, you need to configure the IW4Admin panel.
 
 1. Attach to the `admin-panel` screen process within the container:
    ```bash
-   docker exec -it aio-plutonium-t6-server /bin/bash -c "screen -r admin-panel"
+   docker exec -it aio-plutonium-t5-server /bin/bash -c "screen -r admin-panel"
    ```
 2. Follow the initial configuration steps for [IW4Admin](https://github.com/RaidMax/IW4M-Admin/wiki/Configuration).
 3. After setup, detach from the screen session by pressing `Ctrl+A`, then `Ctrl+D`.
@@ -77,12 +77,12 @@ Changing these may disrupt the server setup.
 
 | **Variable**          | **Default**               |
 |-----------------------|---------------------------|
-| `PLUTONIUM_DIRECTORY` | `/t6server/plutonium`     |
-| `SERVER_DIRECTORY`    | `/t6server/server`        |
-| `IW4ADMIN_DIRECTORY`  | `/t6server/admin`         |
-| `UPDATER_DIRECTORY`   | `/t6server/updater`       |
-| `DOWNLOAD_DIRECTORY`  | `/t6server/downloaded_files` |
-| `STATUS_DIRECTORY`    | `/t6server/status`        |
+| `PLUTONIUM_DIRECTORY` | `/t5server/plutonium`     |
+| `SERVER_DIRECTORY`    | `/t5server/server`        |
+| `IW4ADMIN_DIRECTORY`  | `/t5server/admin`         |
+| `UPDATER_DIRECTORY`   | `/t5server/updater`       |
+| `DOWNLOAD_DIRECTORY`  | `/t5server/downloaded_files` |
+| `STATUS_DIRECTORY`    | `/t5server/status`        |
 
 ### Configurable Environment Variables
 

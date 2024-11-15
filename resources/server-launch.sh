@@ -1,11 +1,11 @@
 #!/bin/bash
 
-PLUTONIUM_DIRECTORY=/t6server/plutonium
-SERVER_DIRECTORY=/t6server/server
-IW4ADMIN_DIRECTORY=/t6server/admin
-DOWNLOAD_DIRECTORY=/t6server/downloaded_files
-UPDATER_DIRECTORY=/t6server/updater
-STATUS_DIRECTORY=/t6server/status
+PLUTONIUM_DIRECTORY=/t5server/plutonium
+SERVER_DIRECTORY=/t5server/server
+IW4ADMIN_DIRECTORY=/t5server/admin
+DOWNLOAD_DIRECTORY=/t5server/downloaded_files
+UPDATER_DIRECTORY=/t5server/updater
+STATUS_DIRECTORY=/t5server/status
 
 # Create Directories (redudant as they are created in the Dockerfile)
 mkdir -p $PLUTONIUM_DIRECTORY \
@@ -26,7 +26,7 @@ if [ -e $STATUS_DIRECTORY/.sv_files_downloaded ]; then
     echo "Server files already downloaded!"
 else
     echo "Downloading server files..."
-    wget https://vault.our-space.xyz/ATOM/T6-Server.zip -O $DOWNLOAD_DIRECTORY/T6-Server.zip -q --show-progress
+    wget https://vault.our-space.xyz/ATOM/T5-Server.zip -O $DOWNLOAD_DIRECTORY/T5-Server.zip -q --show-progress
     # Check the exit status
     if [ $? -eq 0 ]; then
         echo "Server files downloaded successfully!"
@@ -42,7 +42,7 @@ if [ -e $STATUS_DIRECTORY/.sv_files_extracted ]; then
     echo "Server files already extracted!"
 else
     echo "Extracting server files..."
-    unzip -o $DOWNLOAD_DIRECTORY/T6-Server.zip -d $DOWNLOAD_DIRECTORY/
+    unzip -o $DOWNLOAD_DIRECTORY/T5-Server.zip -d $DOWNLOAD_DIRECTORY/
     # Check the exit status
     if [ $? -eq 0 ]; then
         echo "Server files extracted successfully!"
@@ -54,7 +54,7 @@ else
 fi
 
 # Remove the downloaded Zip file [WIP]
-# rm $DOWNLOAD_DIRECTORY/T6-Server.zip
+# rm $DOWNLOAD_DIRECTORY/T5-Server.zip
 
 # Copy Server Files
 if [ -e $STATUS_DIRECTORY/.sv_files_copied ]; then
@@ -65,7 +65,7 @@ else
     # Copy the files to the destination directory
 
     echo "Copying /Plutonium files..."
-    cp -r $DOWNLOAD_DIRECTORY/T6-Server/Plutonium/* $PLUTONIUM_DIRECTORY
+    cp -r $DOWNLOAD_DIRECTORY/T5-Server/Plutonium/* $PLUTONIUM_DIRECTORY
     # Check the exit status
     if [ $? -eq 0 ]; then
         echo "Server files from /Plutonium copied successfully!"
@@ -75,7 +75,7 @@ else
     fi
     
     echo "Copying /Server files..."
-    cp -r $DOWNLOAD_DIRECTORY/T6-Server/Server/* $SERVER_DIRECTORY
+    cp -r $DOWNLOAD_DIRECTORY/T5-Server/Server/* $SERVER_DIRECTORY
     # Check the exit status
     if [ $? -eq 0 ]; then
         echo "Server files from /Server copied successfully!"
@@ -111,7 +111,7 @@ if [ -e $STATUS_DIRECTORY/.sv_cfg_files_downloaded ]; then
     echo "Server config files already downloaded!"
 else
     echo "Downloading server config files..."
-    wget https://github.com/xerxes-at/T6ServerConfigs/archive/master.zip -O $DOWNLOAD_DIRECTORY/server_configs.zip -q --show-progress
+    wget https://github.com/xerxes-at/T5ServerConfigs/archive/master.zip -O $DOWNLOAD_DIRECTORY/server_configs.zip -q --show-progress
     # Check the exit status
     if [ $? -eq 0 ]; then
         echo "Server files downloaded successfully!"
@@ -145,18 +145,18 @@ else
     echo "Copying server config files..."
 
     # Locate config files
-    t6_path=$(find "$DOWNLOAD_DIRECTORY/server_configs/" -type d -name "t6")
-    mp_cfg="$t6_path/dedicated.cfg"
-    zm_cfg="$t6_path/dedicated_zm.cfg"
-    gs_path="$t6_path/gamesettings/"
+    t5_path=$(find "$DOWNLOAD_DIRECTORY/server_configs/" -type d -name "t6")
+    mp_cfg="$t5_path/dedicated.cfg"
+    zm_cfg="$t5_path/dedicated_zm.cfg"
+    gs_path="$t5_path/gamesettings/"
 
     # Copy Multiplayer config file
     if [ -z "$mp_cfg" ]; then
         echo "File not found: '$mp_cfg'"
     else
         # Copy the file to the destination directory
-        cp "$mp_cfg" "/t6server/server/Multiplayer/main/dedicated.cfg"
-        echo "File '$mp_cfg' found and copied to: '/t6server/server/Multiplayer/main/dedicated.cfg'"
+        cp "$mp_cfg" "/t5server/server/Multiplayer/main/dedicated.cfg"
+        echo "File '$mp_cfg' found and copied to: '/t5server/server/Multiplayer/main/dedicated.cfg'"
     fi
 
     # Copy Zombie config file
@@ -164,8 +164,8 @@ else
         echo "File not found: '$zm_cfg'"
     else
         # Copy the file to the destination directory
-        cp "$zm_cfg" "/t6server/server/Zombie/main/dedicated_zm.cfg"
-        echo "File '$zm_cfg' found and copied to: '/t6server/server/Zombie/main/dedicated_zm.cfg'"
+        cp "$zm_cfg" "/t5server/server/Zombie/main/dedicated_zm.cfg"
+        echo "File '$zm_cfg' found and copied to: '/t5server/server/Zombie/main/dedicated_zm.cfg'"
     fi
 
     # Copy Game Settings files
@@ -173,8 +173,8 @@ else
         echo "Directory not found: '$gs_path'"
     else
         # Copy the file to the destination directory
-        cp -r "$gs_path" "/t6server/plutonium/storage/t6/gamesettings/"
-        echo "Directory '$gs_path' found and copied to: '/t6server/plutonium/storage/t6/'"
+        cp -r "$gs_path" "/t6server/plutonium/storage/t5/gamesettings/"
+        echo "Directory '$gs_path' found and copied to: '/t6server/plutonium/storage/t5/'"
     fi
 
     touch $STATUS_DIRECTORY/.sv_cfg_files_copied
@@ -218,22 +218,22 @@ CFG=""
 # Default Mode is Zombie ('t6mp' -> Multiplayer | 't6zm' -> Zombie)
 if [ "$SERVER_MODE" = "Multiplayer" ]; then
     echo "Server mode is Multiplayer!"
-    MODE_PATH="/t6server/server/Multiplayer"
-    MODE="t6mp"
+    MODE_PATH="/t5server/server/Multiplayer"
+    MODE="t5mp"
     CFG="dedicated.cfg"
     CFG_PATH="$MODE_PATH/main/$CFG"
-    ln -sf /t6server/server/zone /t6server/server/Multiplayer/zone
+    ln -sf /t5server/server/zone /t5server/server/Multiplayer/zone
 else
     if [ "$SERVER_MODE" != "Zombie" ]; then
         echo "Invalid Server Mode! Defaulting to Zombie"
     else
         echo "Server mode is Zombie!"
     fi
-    MODE="t6zm"
-    MODE_PATH="/t6server/server/Zombie"
+    MODE="t5zm"
+    MODE_PATH="/t5server/server/Zombie"
     CFG="dedicated_zm.cfg"
     CFG_PATH="$MODE_PATH/main/$CFG"
-    ln -sf /t6server/server/zone /t6server/server/Zombie/zone
+    ln -sf /t6server/server/zone /t5server/server/Zombie/zone
 fi
 
 # Define if server will run in LAN mode
@@ -282,7 +282,7 @@ fi
 ################################################################################
 
 # Define IW4Admin Logs Directory
-LOGS_DIR="$PLUTONIUM_DIRECTORY/storage/t6/logs/"
+LOGS_DIR="$PLUTONIUM_DIRECTORY/storage/t5/logs/"
 
 echo "Checking IW4Admin files..."
 
@@ -343,7 +343,7 @@ if [ -e $PLUTONIUM_DIRECTORY/bin/plutonium-bootstrapper-win32.exe ]; then
     # Run the Server (detached on a screen named plutonium-server)
     # ( cd $PLUTONIUM_DIRECTORY && pkill Xvfb || true && exec xvfb-run wine ${STARTUP} )
     ( cd $PLUTONIUM_DIRECTORY && pkill Xvfb || true && screen -S plutonium-server -dm bash -c "exec xvfb-run wine ${STARTUP}" )
-    # ( cd $PLUTONIUM_DIRECTORY && pkill Xvfb || true && screen -S plutonium-server -dm bash -c "exec xvfb-run wine /t6server/plutonium/bin/plutonium-bootstrapper-win32.exe t6zm /t6server/server/Zombie -dedicated -lan +start_map_rotate +set key YOUR_KEY_HERE +set net_port 4976 +set sv_config dedicated_zm.cfg" )
+    # ( cd $PLUTONIUM_DIRECTORY && pkill Xvfb || true && screen -S plutonium-server -dm bash -c "exec xvfb-run wine /t5server/plutonium/bin/plutonium-bootstrapper-win32.exe t6zm /t5server/server/Zombie -dedicated -lan +start_map_rotate +set key YOUR_KEY_HERE +set net_port 4976 +set sv_config dedicated_zm.cfg" )
 else
     echo "Missing Plutonium files!! Add them manually!"
     exit 1
