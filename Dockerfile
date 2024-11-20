@@ -43,6 +43,9 @@ RUN cd /root/T5Server && \
     aria2c --seed-time=0 --max-download-limit=0 -d /root/T5Server -T pluto_t5_full_game.torrent && \
     rm /root/T5Server/pluto_t5_full_game.torrent
 
+# Copy the configuration file into the container
+COPY dedicated_sp.cfg /root/T5Server/Server/dedicated_sp.cfg
+
 # Ensure the server scripts are in place and make them executable
 COPY T5_zm_server.sh /root/T5Server/Plutonium/T5_zm_server.sh
 COPY T5_mp_server.sh /root/T5Server/Plutonium/T5_mp_server.sh
