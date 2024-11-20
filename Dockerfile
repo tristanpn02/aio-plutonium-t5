@@ -50,10 +50,10 @@ RUN cd /root/T5Server/Plutonium && \
     tar xfv plutonium-updater-x86_64-unknown-linux-gnu.tar.gz && \
     rm plutonium-updater-x86_64-unknown-linux-gnu.tar.gz
 
-# Download the game files (simulating a torrent download)
+# Download the game files using aria2c (and auto-exit when done)
 RUN cd /root/T5Server && \
     wget https://web.archive.org/web/20230106045330mp_/https://www.plutonium.pw/pluto_t5_full_game.torrent && \
-    aria2c -d /root/T5Server -T pluto_t5_full_game.torrent && \
+    aria2c --seed-time=0 --max-download-limit=0 -d /root/T5Server -T pluto_t5_full_game.torrent && \
     rm /root/T5Server/pluto_t5_full_game.torrent
 
 # Clean Installation: Move game files to Server folder and remove unnecessary files
