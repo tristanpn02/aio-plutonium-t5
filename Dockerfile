@@ -24,13 +24,14 @@ RUN apt-get update && \
     screen \
     && rm -rf /var/lib/apt/lists/*
 
-# Add Microsoft package signing key and package repository for .NET SDK (Ubuntu 20.04)
-RUN wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | apt-key add - && \
-    add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/dotnet/ubuntu/20.04/prod stable main" && \
-    apt-get update -y && \
+# Add Microsoft Package Signing Key and Repository, then install .NET SDK 6.0 and 3.1
+RUN wget https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
+    dpkg -i packages-microsoft-prod.deb && \
+    apt-get update && \
     apt-get install -y \
     dotnet-sdk-6.0 \
-    dotnet-sdk-3.1
+    dotnet-sdk-3.1 && \
+    rm packages-microsoft-prod.deb
 
 # Enable 32-bit architecture support
 RUN dpkg --add-architecture i386 && \
