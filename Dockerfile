@@ -22,8 +22,8 @@ RUN apt-get update && \
     fail2ban \
     wine64 \
     screen \
-    psmisc && \  # Install psmisc for killall command
-    rm -rf /var/lib/apt/lists/*
+    psmisc && \
+    rm -rf /var/lib/apt/lists/*  # Clean up package lists to reduce image size
 
 # Enable 32-bit architecture support
 RUN dpkg --add-architecture i386 && \
