@@ -22,7 +22,7 @@ RUN mkdir -p /root/T5Server/Plutonium /root/T5Server/Server
 # Download and install the Plutonium updater
 RUN cd /root/T5Server/Plutonium && \
     wget https://github.com/mxve/plutonium-updater.rs/releases/latest/download/plutonium-updater-x86_64-unknown-linux-gnu.tar.gz && \
-    tar -xfv plutonium-updater-x86_64-unknown-linux-gnu.tar.gz && \
+    tar -xvf plutonium-updater-x86_64-unknown-linux-gnu.tar.gz && \
     rm plutonium-updater-x86_64-unknown-linux-gnu.tar.gz
 
 # Download game files and extract directly into the Server directory
