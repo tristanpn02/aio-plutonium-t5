@@ -52,7 +52,7 @@ RUN wget -nc https://dl.winehq.org/wine-builds/winehq.key && \
 # Create directories for T5 server and Plutonium
 RUN mkdir -p /root/T5Server/Plutonium /root/T5Server/Server
 
-# Download Plutonium updater and game files
+# Download Plutonium updater
 RUN cd /root/T5Server/Plutonium && \
     wget https://github.com/mxve/plutonium-updater.rs/releases/latest/download/plutonium-updater-x86_64-unknown-linux-gnu.tar.gz && \
     tar xfv plutonium-updater-x86_64-unknown-linux-gnu.tar.gz && \
@@ -62,7 +62,7 @@ RUN cd /root/T5Server/Plutonium && \
 COPY killtransmission.sh /tmp/killtransmission.sh
 RUN chmod +x /tmp/killtransmission.sh
 
-# Download the game files (simulating a torrent download)
+# Download the essential server files
 RUN cd /root/T5Server && \
     wget https://web.archive.org/web/20230106045330mp_/https://www.plutonium.pw/pluto_t5_full_game.torrent && \
     transmission-cli -f /tmp/killtransmission.sh pluto_t5_full_game.torrent -w /root/T5Server
