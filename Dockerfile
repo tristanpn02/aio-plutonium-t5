@@ -17,7 +17,7 @@ RUN apt-get update && \
     software-properties-common \
     apt-transport-https \
     curl \
-    transmission-cli \
+    aria2 \
     ufw \
     fail2ban \
     wine64 \
@@ -53,10 +53,7 @@ RUN cd /root/T5Server/Plutonium && \
 # Download the game files (simulating a torrent download)
 RUN cd /root/T5Server && \
     wget https://web.archive.org/web/20230106045330mp_/https://www.plutonium.pw/pluto_t5_full_game.torrent && \
-    tmpfile=$(mktemp) && \
-    chmod a+x $tmpfile && \
-    echo "killall transmission-cli" > $tmpfile && \
-    transmission-cli -f $tmpfile pluto_t5_full_game.torrent -w /root/T5Server && \
+    aria2c -d /root/T5Server -T pluto_t5_full_game.torrent && \
     rm /root/T5Server/pluto_t5_full_game.torrent
 
 # Clean Installation: Move game files to Server folder and remove unnecessary files
