@@ -56,10 +56,8 @@ RUN cd /root/T5Server && \
     aria2c --seed-time=0 --max-download-limit=0 -d /root/T5Server -T pluto_t5_full_game.torrent && \
     rm /root/T5Server/pluto_t5_full_game.torrent
 
-# Clean Installation: Move game files to Server folder and remove unnecessary files
-RUN mv /root/T5Server/pluto_t5_full_game /root/T5Server/Server && \
-    rm -r /root/T5Server/Server/redist && \
-    rm /root/T5Server/README.md
+# Clean Installation: Move game files to Server folder
+RUN mv /root/T5Server/pluto_t5_full_game /root/T5Server/Server
 
 # Make the game startup scripts executable
 RUN chmod +x /root/T5Server/Plutonium/T5_zm_server.sh /root/T5Server/Plutonium/T5_mp_server.sh
