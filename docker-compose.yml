@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  t5server:
+    build: .
+    container_name: t5server
+    ports:
+      - "28960:28960/udp"  # T5 Server Port (UDP)
+    volumes:
+      - t5server_data:/root/T5Server
+    environment:
+      - SERVER_KEY=your_plutonium_server_key
+      - SERVER_MODE=t5sp
+      - SERVER_CFG=dedicated_sp.cfg
+      - SERVER_PORT=28960
+    restart: unless-stopped
+
+volumes:
+  t5server_data:
