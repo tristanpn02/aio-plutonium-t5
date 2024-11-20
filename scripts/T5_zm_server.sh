@@ -4,7 +4,7 @@ _script="$(readlink -f ${BASH_SOURCE[0]})"
 # Delete last component from $_script
 _mydir="$(dirname $_script)"
 # Name of the server shown in the title of the terminal window
-NAME="T5 Zombies 1"
+NAME="$SERVER_NAME"
 # Your Game Path (where there is binkw32.dll)
 PAT=~/T5Server/Server
 # Paste the server key from environment variable

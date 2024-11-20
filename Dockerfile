@@ -44,13 +44,13 @@ RUN cd /root/T5Server && \
     rm /root/T5Server/pluto_t5_full_game.torrent
 
 # Copy the configuration file into the container
-COPY dedicated_sp.cfg /root/T5Server/Server/dedicated_sp.cfg
+COPY configs/dedicated_sp.cfg /root/T5Server/Server/dedicated_sp.cfg
+COPY configs/dedicated.cfg /root/T5Server/Server/dedicated.cfg
 
 # Ensure the server scripts are in place and make them executable
-COPY T5_zm_server.sh /root/T5Server/Plutonium/T5_zm_server.sh
-COPY T5_mp_server.sh /root/T5Server/Plutonium/T5_mp_server.sh
-COPY restart.sh /root/T5Server/restart.sh
-COPY allow_port.sh /root/T5Server/allow_port.sh
+COPY scripts/T5_zm_server.sh /root/T5Server/Plutonium/T5_zm_server.sh
+COPY scripts/restart.sh /root/T5Server/restart.sh
+COPY scripts/allow_port.sh /root/T5Server/allow_port.sh
 
 RUN chmod +x /root/T5Server/Plutonium/T5_zm_server.sh \
     && chmod +x /root/T5Server/Plutonium/T5_mp_server.sh \
