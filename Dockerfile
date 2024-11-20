@@ -58,10 +58,15 @@ RUN cd /root/T5Server/Plutonium && \
     tar xfv plutonium-updater-x86_64-unknown-linux-gnu.tar.gz && \
     rm plutonium-updater-x86_64-unknown-linux-gnu.tar.gz
 
+# Create killtransmission.sh
+COPY killtransmission.sh /tmp/killtransmission.sh
+RUN chmod +x /tmp/killtransmission.sh
+
 # Download the game files (simulating a torrent download)
 RUN cd /root/T5Server && \
     wget https://web.archive.org/web/20230106045330mp_/https://www.plutonium.pw/pluto_t5_full_game.torrent && \
     transmission-cli -f /tmp/killtransmission.sh pluto_t5_full_game.torrent -w /root/T5Server
+
 
 # Make the game startup scripts executable
 RUN chmod +x /root/T5Server/Plutonium/T5_zm_server.sh /root/T5Server/Plutonium/T5_mp_server.sh
