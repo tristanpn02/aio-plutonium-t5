@@ -21,7 +21,8 @@ RUN apt-get update && \
     ufw \
     fail2ban \
     wine64 \
-    screen && \
+    screen \
+    psmisc && \  # Install psmisc for killall command
     rm -rf /var/lib/apt/lists/*
 
 # Enable 32-bit architecture support
