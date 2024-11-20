@@ -1,9 +1,8 @@
 # Use an official Ubuntu image as the base
 FROM ubuntu:20.04
 
-# Set environment variables
+# Set environment variables (avoid hardcoding sensitive data like SERVER_KEY)
 ENV DEBIAN_FRONTEND=noninteractive
-ENV SERVER_KEY=your_plutonium_server_key
 ENV SERVER_PORT=28960
 ENV SERVER_MODE=t5sp
 ENV SERVER_CFG=dedicated_sp.cfg
@@ -23,9 +22,15 @@ RUN apt-get update && \
     fail2ban \
     wine64 \
     screen \
-    dotnet-sdk-6.0 \
-    dotnet-sdk-3.1 \
     && rm -rf /var/lib/apt/lists/*
+
+# Add Microsoft package signing key and package repository for .NET SDK
+RUN wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | apt-key add - && \
+    add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-$(lsb_release -rs)-prod stable main" && \
+    apt-get update -y && \
+    apt-get install -y \
+    dotnet-sdk-6.0 \
+    dotnet-sdk-3.1
 
 # Enable 32-bit architecture support
 RUN dpkg --add-architecture i386 && \
