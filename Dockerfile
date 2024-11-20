@@ -24,9 +24,9 @@ RUN apt-get update && \
     screen \
     && rm -rf /var/lib/apt/lists/*
 
-# Add Microsoft package signing key and package repository for .NET SDK
+# Add Microsoft package signing key and package repository for .NET SDK (Ubuntu 20.04)
 RUN wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | apt-key add - && \
-    add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-$(lsb_release -rs)-prod stable main" && \
+    add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/dotnet/ubuntu/20.04/prod stable main" && \
     apt-get update -y && \
     apt-get install -y \
     dotnet-sdk-6.0 \
