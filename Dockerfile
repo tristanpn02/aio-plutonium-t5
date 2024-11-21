@@ -13,7 +13,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 RUN apt-get update && \
     apt-get install -y \
     wget gnupg2 software-properties-common apt-transport-https \
-    curl aria2 ufw fail2ban wine64 screen psmisc unrar && \
+    curl aria2 ufw fail2ban wine64 screen psmisc && \
     rm -rf /var/lib/apt/lists/*
 
 # Create directories for T5 server and Plutonium
@@ -25,12 +25,13 @@ RUN cd /root/T5Server/Plutonium && \
     tar -xvf plutonium-updater-x86_64-unknown-linux-gnu.tar.gz && \
     rm plutonium-updater-x86_64-unknown-linux-gnu.tar.gz
 
-# Download game files and extract directly into the Server directory
+# Download game folder, rename to Server and remove clean-up
 RUN cd /root/T5Server && \
     wget https://web.archive.org/web/20230106045330mp_/https://www.plutonium.pw/pluto_t5_full_game.torrent && \
     aria2c --seed-time=0 --max-download-limit=0 -T pluto_t5_full_game.torrent && \
-    unrar x pluto_t5_full_game.rar /root/T5Server/Server/ && \
-    rm pluto_t5_full_game.torrent pluto_t5_full_game.rar
+    mv pluto_t5_full_game/ Server/ && \
+    rm pluto_t5_full_game.torrent && \
+    rm -r Server/redist
 
 # Copy configuration and scripts
 COPY configs/dedicated_sp.cfg /root/T5Server/Server/
